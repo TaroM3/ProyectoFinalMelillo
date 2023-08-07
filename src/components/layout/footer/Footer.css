@@ -1,0 +1,14 @@
+footer{
+
+    width: 100%;
+    display: flex;
+    height: var(--space-lg);
+    /* background-color: var(--secondary); */
+    /* color: var(--primary); */
+    justify-content: space-between;
+    padding: var(--space-sm);
+    align-items: center;
+    position:fixed;
+    left:0px;
+    bottom:0px;
+}
