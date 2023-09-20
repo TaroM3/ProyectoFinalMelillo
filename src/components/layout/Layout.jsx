@@ -12,7 +12,7 @@ const Layout = () => {
     <>
       <ThemeProvider theme={theme}>
         <Navbar />
-        <Box sx={{minHeight: '50em'}}>
+        <Box sx={{minHeight: '53em'}}>
           <Outlet />
         </Box>
         <Footer />  

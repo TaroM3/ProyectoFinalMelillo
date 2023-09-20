@@ -6,15 +6,16 @@ import { CartContext } from "../../../context/CartContext";
 import { addDoc, collection, doc, serverTimestamp, updateDoc } from "firebase/firestore";
 import { db } from "../../../firebaseConfig";
 import { ThemeContext } from "../../../context/ThemeContext";
+import Bill from "../../common/bill/Bill";
 
 const FormFormik = () => {
-  const [showPassword, setShowPassword] = useState(false);
-  const { cart, getTotalPrice } = useContext(CartContext);
+  const [showPassword, setShowPassword] = useState(true);
+  const { cart, getTotalPrice, clearCart } = useContext(CartContext);
   const [order, setOrder] = useState({});
 
   let total = getTotalPrice();
 
-  const {theme} = useContext(ThemeContext)
+  // const {cart } = useContext(ThemeContext)
   const { handleSubmit, handleChange, errors } = useFormik({
     initialValues: {
       name: "",
@@ -30,7 +31,11 @@ const FormFormik = () => {
         date: serverTimestamp(),
       };
       let ordersCollections = collection(db, "orders");
-      addDoc(ordersCollections, order).then((res) => setOrder({...res.data(), id: res.id}));
+      addDoc(ordersCollections, order).then((res) => {
+        setOrder({...res.data, id: res.id})
+      }).then(res => {
+        clearCart()
+      });
 
       // MODIFICAR TODOS LOS PRODUCTOS EN SU STOCK
       cart.forEach((elemento) => {
@@ -54,9 +59,9 @@ const FormFormik = () => {
 
   //'#9b9b9b'
   return (
-    <Box sx={{ height:'30em',width: '40em',margin: '4em auto', padding: '3em', height: '30em', backgroundColor: 'detail.main'}}>
+    <Box sx={{ height:'30em',width: '40em',margin: '4em auto', padding: '3em', backgroundColor: 'detail.main'}}>
       {
-        !order ? <form style={{display: 'flex', justifyContent: 'center', flexDirection: 'column', gap: '2em'}} onSubmit={handleSubmit}>
+        order.id == undefined ? <form style={{display: 'flex', justifyContent: 'center', flexDirection: 'column', gap: '2em'}} onSubmit={handleSubmit}>
         <TextField
           label="Nombre"
           variant="outlined"
@@ -94,10 +99,13 @@ const FormFormik = () => {
         </Button>
 
       </form> : <h1>El numero de orden es {order.id}</h1>
-        
+      
       }
+      
     </Box>
   );
 };
 
 export default FormFormik;
+
+  

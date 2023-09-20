@@ -19,7 +19,9 @@ const TableDashboard = () => {
     const deleteById = (id) => {
         let productsCollection = collection(db, 'products')
         let docRef = doc(productsCollection, id)
-        deleteDoc(docRef)
+        deleteDoc(docRef).then((res) => {
+            
+        })
     }
     useEffect(() => {
         let productsCollection = collection(db, 'products')

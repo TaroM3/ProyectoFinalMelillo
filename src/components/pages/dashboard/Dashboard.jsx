@@ -22,7 +22,7 @@ const Dashboard = () => {
     <div>
       <ThemeProvider theme={theme}>
         <Navbar />
-        <Box sx={{minHeight: '50em', padding: '2em', margin: '2em'}}>
+        <Box sx={{minHeight: '53em', padding: '2em', margin: '2em'}}>
           <TableDashboard />
           <h1>Ruta para el administrador</h1>
           <Button variant="contained" onClick={rellenar}>Rellenar base de datos</Button>
